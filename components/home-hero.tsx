@@ -10,6 +10,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel"
+import { SearchCarForm } from "@/components/search-car-form"
 import headerImage from "@/public/assets/home-header-image.png"
 
 const slides = [
@@ -121,6 +122,10 @@ export function HomeHero() {
             </button>
           ))}
         </div>
+      </div>
+
+      <div className="absolute inset-y-0 right-[10%] hidden items-center lg:flex">
+        <SearchCarForm />
       </div>
     </Carousel>
   )
