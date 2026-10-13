@@ -29,7 +29,13 @@ export function Navbar() {
             </Button>
           </Show>
           <Show when="signed-in">
-            <UserButton />
+            <UserButton
+              appearance={{
+                elements: {
+                  userButtonAvatarBox: { width: "2.25rem", height: "2.25rem" },
+                },
+              }}
+            />
           </Show>
         </div>
       </nav>
