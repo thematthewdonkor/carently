@@ -30,6 +30,17 @@ const slides = [
   },
 ]
 
+const brands = [
+  { name: "Honda", src: "/assets/honda.svg", width: 34, height: 29 },
+  { name: "Toyota", src: "/assets/toyota.svg", width: 34, height: 28 },
+  { name: "Mercedes", src: "/assets/benz.svg", width: 32, height: 32 },
+  { name: "Ford", src: "/assets/ford.svg", width: 40, height: 15 },
+  { name: "Tesla", src: "/assets/tesla.svg", width: 33, height: 34 },
+  { name: "BMW", src: "/assets/bmw.svg", width: 35, height: 28 },
+  { name: "Nissan", src: "/assets/nissan.svg", width: 34, height: 29 },
+  { name: "Jeep", src: "/assets/jeep.svg", width: 30, height: 30 },
+]
+
 const AUTOPLAY_DELAY = 6000
 
 export function HomeHero() {
@@ -72,7 +83,7 @@ export function HomeHero() {
           <CarouselItem
             key={item.title}
             aria-label={`${index + 1} of ${slides.length}`}
-            className="relative min-h-112 pl-0 md:aspect-12/5 md:min-h-0"
+            className="relative min-h-136 pl-0 md:aspect-2/1 md:min-h-0 lg:aspect-12/5"
           >
             <Image
               src={headerImage}
@@ -88,45 +99,74 @@ export function HomeHero() {
         ))}
       </CarouselContent>
 
-      <div className="pointer-events-none absolute inset-0 flex flex-col justify-center gap-10 px-6 md:px-[10%]">
-        <div
-          key={current}
-          className="flex max-w-md animate-in flex-col gap-4 text-white duration-500 fade-in slide-in-from-bottom-2 lg:max-w-xl"
-        >
-          <h1 className="text-4xl leading-tight font-medium tracking-tight text-balance md:text-5xl">
-            {slide.title}
-          </h1>
-          <p className="text-lg text-pretty text-white/90 md:text-2xl">
-            {slide.description}
-          </p>
+      <div className="pointer-events-none absolute inset-0 flex flex-col gap-8 px-6 pb-6 md:px-[10%] md:pb-10">
+        <div className="flex flex-1 flex-col justify-center gap-10">
+          <div
+            key={current}
+            className="flex max-w-md animate-in flex-col gap-4 text-white duration-500 fade-in slide-in-from-bottom-2 lg:max-w-xl"
+          >
+            <h1 className="text-4xl leading-tight font-medium tracking-tight text-balance md:text-5xl">
+              {slide.title}
+            </h1>
+            <p className="text-lg text-pretty text-white/90 md:text-2xl">
+              {slide.description}
+            </p>
+          </div>
+
+          <div className="pointer-events-auto flex gap-5">
+            {slides.map((item, index) => (
+              <button
+                key={item.title}
+                type="button"
+                aria-label={`Go to slide ${index + 1}`}
+                aria-current={index === current}
+                onClick={() => api?.scrollTo(index)}
+                className="group rounded-full py-2 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              >
+                <span
+                  className={cn(
+                    "block h-1 w-12 rounded-full transition-colors md:w-20",
+                    index === current
+                      ? "bg-brand"
+                      : "bg-white group-hover:bg-white/80"
+                  )}
+                />
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="pointer-events-auto flex gap-5">
-          {slides.map((item, index) => (
-            <button
-              key={item.title}
-              type="button"
-              aria-label={`Go to slide ${index + 1}`}
-              aria-current={index === current}
-              onClick={() => api?.scrollTo(index)}
-              className="group rounded-full py-2 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-            >
-              <span
-                className={cn(
-                  "block h-1 w-12 rounded-full transition-colors md:w-20",
-                  index === current
-                    ? "bg-brand"
-                    : "bg-white group-hover:bg-white/80"
-                )}
-              />
-            </button>
-          ))}
-        </div>
+        <BrandList className="justify-center md:justify-start lg:hidden" />
       </div>
 
-      <div className="absolute inset-y-0 right-[10%] hidden items-center lg:flex">
+      <div className="absolute inset-y-0 right-[10%] hidden flex-col justify-center gap-6 lg:flex">
         <SearchCarForm />
+        <BrandList className="w-sm justify-between" />
       </div>
     </Carousel>
+  )
+}
+
+function BrandList({ className }: { className?: string }) {
+  return (
+    <ul
+      aria-label="Popular car brands"
+      className={cn(
+        "inline-flex flex-nowrap items-center gap-3 md:gap-6",
+        className
+      )}
+    >
+      {brands.map((brand) => (
+        <li key={brand.name} className="flex">
+          <Image
+            src={brand.src}
+            alt={brand.name}
+            width={brand.width}
+            height={brand.height}
+            className="h-5 w-auto md:h-7"
+          />
+        </li>
+      ))}
+    </ul>
   )
 }
