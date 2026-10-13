@@ -55,7 +55,7 @@ export function SearchCarForm() {
   })
 
   return (
-    <form className="w-sm shrink-0 rounded-3xl bg-card p-6 text-card-foreground shadow-xl ring-1 ring-foreground/5">
+    <form className="w-full shrink-0 lg:w-sm lg:rounded-3xl lg:bg-card lg:p-6 lg:text-card-foreground lg:shadow-xl lg:ring-1 lg:ring-foreground/5">
       <FieldGroup className="gap-5">
         <Controller
           name="location"
